@@ -1,34 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Atom</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Lucida Console', Monaco, monospace;
-            position: relative;
-        }
-        .center-text {
-            text-align: center;
-        }
-        .bottom-left {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Atom | Attention is our new currency</title>
+  <meta name="description" content="Digital Atom. Attention is our new currency. Contact hello@digitalatom.ru.">
+  <link rel="canonical" href="https://digitalatom.ru/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Digital Atom">
+  <meta property="og:url" content="https://digitalatom.ru/">
+  <meta property="og:title" content="Digital Atom | Attention is our new currency">
+  <meta property="og:description" content="Digital Atom. Attention is our new currency.">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Digital Atom",
+    "url": "https://digitalatom.ru/",
+    "email": "hello@digitalatom.ru"
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Lucida Console", Monaco, monospace;
+      color: #111;
+      background: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      font-family: inherit;
+      position: relative;
+    }
+    main { text-align: center; }
+    h1 {
+      margin: 0;
+      font: inherit;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: normal;
+    }
+    .bottom-left {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+    }
+    .site-footer {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      display: flex;
+      gap: 14px;
+      font-size: 11px;
+    }
+    .analytics-consent {
+      position: fixed;
+      z-index: 10;
+      left: 50%;
+      bottom: 42px;
+      transform: translateX(-50%);
+      width: min(680px, calc(100% - 24px));
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #555;
+      background: #fff;
+      box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .analytics-consent[hidden] { display: none; }
+    .analytics-consent p { flex: 1 1 280px; margin: 0; }
+    .analytics-consent button {
+      padding: 6px 9px;
+      border: 1px solid #555;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #1358a8; outline-offset: 3px; }
+    @media (max-width: 520px) {
+      body { padding-bottom: 60px; flex-direction: column; }
+      .site-footer { position: static; margin-top: 28px; }
+      .bottom-left { bottom: 10px; }
+      main { margin: auto; }
+    }
+  </style>
 </head>
 <body>
-    <div class="center-text">
-        Attention is our new currency.
-        <!-- The only thing we are willing to pay with is attention. -->
-    </div>
-    <a href="mailto:hello@digitalatom.ru" class="bottom-left">hello@digitalatom.ru</a>
+  <main>
+    <h1>Attention is our new currency.</h1>
+  </main>
+  <a href="mailto:hello@digitalatom.ru" class="bottom-left">hello@digitalatom.ru</a>
+  <footer class="site-footer">
+    <a href="/privacy.html">Privacy and analytics</a>
+    <button id="analytics-settings" type="button">Privacy settings</button>
+  </footer>
+
+  <aside id="analytics-consent" class="analytics-consent" role="dialog" aria-label="Analytics preferences" aria-describedby="analytics-consent-copy" hidden>
+    <p id="analytics-consent-copy">
+      Digital Atom uses Google Analytics to measure visits. It stays off unless you allow it.
+      <a href="/privacy.html">Details</a>
+    </p>
+    <button id="analytics-allow" type="button">Allow analytics</button>
+    <button id="analytics-reject" type="button">Decline</button>
+  </aside>
+
+  <script>
+    (function () {
+      var measurementId = "G-2PDCDKBYLP";
+      var consentKey = "digitalatom.analytics-consent.v1";
+      var banner = document.getElementById("analytics-consent");
+      var forceSettings = new URLSearchParams(window.location.search).get("privacy-settings") === "1";
+
+      function readChoice() {
+        try { return localStorage.getItem(consentKey); }
+        catch (error) { return null; }
+      }
+      function writeChoice(value) {
+        try { localStorage.setItem(consentKey, value); }
+        catch (error) {}
+      }
+      function clearAnalyticsCookies() {
+        var names = document.cookie.split(";").map(function (item) {
+          return item.trim().split("=")[0];
+        }).filter(function (name) {
+          return name === "_ga" || name.indexOf("_ga_") === 0;
+        });
+        names.forEach(function (name) {
+          document.cookie = name + "=; Max-Age=0; path=/; SameSite=Lax; Secure";
+          document.cookie = name + "=; Max-Age=0; path=/; domain=.digitalatom.ru; SameSite=Lax; Secure";
+        });
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+      window.gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied"
+      });
+
+      function loadAnalytics() {
+        if (window.digitalAtomAnalyticsLoaded) return;
+        window.digitalAtomAnalyticsLoaded = true;
+        window.gtag("consent", "update", {
+          analytics_storage: "granted",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        window.gtag("js", new Date());
+        window.gtag("config", measurementId, {
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false
+        });
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+        document.head.appendChild(script);
+      }
+
+      function saveChoice(choice) {
+        writeChoice(choice);
+        window.gtag("consent", "update", {
+          analytics_storage: choice === "granted" ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied"
+        });
+        if (choice === "granted") loadAnalytics();
+        else clearAnalyticsCookies();
+        banner.hidden = true;
+        if (forceSettings) history.replaceState(null, "", location.pathname + location.hash);
+      }
+
+      var savedChoice = forceSettings ? null : readChoice();
+      if (forceSettings) {
+        try { localStorage.removeItem(consentKey); } catch (error) {}
+      }
+      if (savedChoice === "granted") loadAnalytics();
+      else if (savedChoice !== "denied") banner.hidden = false;
+
+      document.getElementById("analytics-allow").addEventListener("click", function () {
+        saveChoice("granted");
+      });
+      document.getElementById("analytics-reject").addEventListener("click", function () {
+        saveChoice("denied");
+      });
+      document.getElementById("analytics-settings").addEventListener("click", function () {
+        banner.hidden = false;
+      });
+      document.addEventListener("click", function (event) {
+        var link = event.target.closest && event.target.closest('a[href^="mailto:"]');
+        if (link && readChoice() === "granted" && typeof window.gtag === "function") {
+          window.gtag("event", "contact_click", { contact_method: "email" });
+        }
+      });
+    }());
+  </script>
 </body>
 </html>
